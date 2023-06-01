@@ -10,8 +10,7 @@
             </Anchor>
         </Anchors>
 
-        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" 
-        edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
             <BackgroundInsets>
                 <AbsInset left="11" right="12" top="12" bottom="11"/>
             </BackgroundInsets>
@@ -25,9 +24,28 @@
 
         <Layers>
             <Layer level="OVERLAY">
-                <FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="CENTER" setAllPoints="true" text ="CombatTracker"/>
+                <FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="CENTER"
+                 setAllPoints="true" text ="CombatTracker"/>
             </Layer>
         </Layers>
+
+        <Scripts>
+            <OnLoad>
+				CombatTracker_OnLoad(self)
+            </OnLoad>
+            <OnEvent>
+				CombatTracker_OnEvent(self,event,...)  
+            </OnEvent>
+            <OnClick>
+				CombatTracker_ReportDPS()
+            </OnClick>
+            <OnDragStart>
+				self:StartMoving()
+            </OnDragStart>
+            <OnDragStop>
+				self:StopMovingOrSizing()
+            </OnDragStop>
+        </Scripts>
 
     </Button>
 
