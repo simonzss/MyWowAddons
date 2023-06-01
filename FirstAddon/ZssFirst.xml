@@ -1,0 +1,150 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+	<!-- 注册一个窗口 用来响应事件-->
+	<Frame name="MyFrame" parent="UIParent" frameStrata="HIGH" frameLevel="5">
+		<Size x="100" y="50"/>
+		<Anchors>
+			<Anchor point = "CENTER" relativePoint = "CENTER" relativeTo="UIParent">
+				<Offset x="0" y="0"/>
+			</Anchor>
+		</Anchors>
+
+		<Layers>
+			<Layer level="BACKGROUND">
+				<FontString name="MyText"/>
+				<Texture name="$parentPainicon" file="Interface\Icons\Spell_Shadow_ShadowWordPain" setAllPoints="true">
+				</Texture>
+			</Layer>
+		</Layers>
+
+		<Scripts>
+			<OnEnter>
+				ChatFrame1:AddMessage("++ Entered frame:"..self:GetName())
+			</OnEnter>
+			<OnLeave>
+				ChatFrame1:AddMessage("-- Leaving frame:"..self:GetName())
+			</OnLeave>
+			<OnLoad>
+				self:RegisterEvent("UNIT_HEALTH")
+			</OnLoad>
+			<OnEvent>
+				local unit = ...    																								<!-- unit接收了来自事件UNIT_HEALTH的所有参数 -->
+				ChatFrame1:AddMessage ("UNIT_HEALTH - unit="..unit)
+			</OnEvent>
+		</Scripts>
+	</Frame>
+
+	<!-- 注册一个按钮 用来响应点击（不是事件） 
+	函数接收3个参数，self窗体名，button进行单击的鼠标按钮，down鼠标单击的方向-->
+	<Button name="OnClickTest" parent="UIParent">
+		<Size x="10" y="10"/>
+		<Anchors>
+			<Anchor point="CENTER" relativePoint="CENTER" relativeTo="UIParent"/>
+		</Anchors>
+
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentIcon" file="Interface\Icons\Spell_Shadow_ShadowWordPain" setAllPoints="true"/>
+			</Layer>
+		</Layers>
+
+		<Scripts>
+			<OnLoad>
+				self:RegisterForClicks("AnyUp","AnyDown")
+			</OnLoad>
+			<OnClick>
+				ChatFrame1:AddMessage(self:GetName().."Button :"..tostring(button).."Down :"..tostring(down))
+			</OnClick>
+		</Scripts>
+	</Button>
+
+	<!-- 新建一个XML模板，在name 属性中提供模板名称，并将virtual 属性设置为true
+	Virtual 一个布尔值，指示一个窗体是否为虚模板（Virtual template）
+	虚模板是指并没有实际的对象被创建：相应地，创建的是一个模板 -->
+	<Button name="IconTestTemplate" virtual="true">
+		<Size x="32" y="32" />
+
+		<Layers>
+			<Layer level="OVERLAY">
+				<Texture name="$parentIcon" file="Interface\Icons\Spell_Shadow_ShadowWordPain" setAllPoints="true"/>
+			</Layer>
+		</Layers>
+
+		<Scripts>
+			<OnLoad>  self.Icon=getglobal(self:GetName() .. "Icon")
+												<!-- self是一个表，self.Icon也是一个表
+				字符串做为关键字时，可以有快捷写法，将
+				alice["address"] = "114 Auburn Street"   简写为
+				alice.address = "114 Auburn Street"
+				-->
+			</OnLoad>
+			<OnEnter>
+				self.Icon:SetDesaturated(true)
+												<!-- SetDesaturated灰度设置 -->
+			</OnEnter>
+			<OnLeave>
+				self.Icon:SetDesaturated(nil)
+			</OnLeave>
+			<OnClick>
+				ChatFrame1:AddMessage("You clicked on ".. self:GetName())
+			</OnClick>
+		</Scripts>
+	</Button>
+
+	<!-- 使用定义的XML模板 -->
+	<Button name="IconTest1" inherits="IconTestTemplate" parent="UIParent">
+		<Anchors>
+			<Anchor point="BOTTOMRIGHT" relativePoint="CENTER" relativeTo="UIParent"/>
+		</Anchors>
+	</Button>
+
+	<Button name="IconTest2" inherits="IconTestTemplate" parent="UIParent">
+		<Anchors>
+			<Anchor point="BOTTOMLEFT" relativePoint="CENTER" relativeTo="UIParent"/>
+		</Anchors>
+	</Button>
+
+	<Button name="IconTest3" inherits="IconTestTemplate" parent="UIParent">
+		<Anchors>
+			<Anchor point="TOPLEFT" relativePoint="CENTER" relativeTo="UIParent"/>
+		</Anchors>
+	</Button>
+
+	<Button name="IconTest4" inherits="IconTestTemplate" parent="UIParent">
+		<Anchors>
+			<Anchor point="TOPRIGHT" relativePoint="CENTER" relativeTo="UIParent"/>
+		</Anchors>
+	</Button>
+
+</Ui>
+
+
+<!-- Frame有8个层级，从BACKGROUND到TOOLTIP 每个层级还有自己的frameLevel-->
+<!-- 所有的Texture和FontString必须属于一个给定窗体的<Layer>元素，更确切地说，属于指定的<Layer>元素 -->
+<!-- <Layer>元素有5个层级，从BACKGROUND到HIGHLIGHT-->
+<!-- 3 种基本用户界面的对象Frame、Texture、FontString的常用5个属性Name、Inherits、setAllPoints、Virtual、Hidden-->
+
+<!-- 类似<OnEnter>处理模块在窗体的<Scripts>元素中使用特定的元素定义。每个位于元素内的处理模块都只是函数定义形式的
+Lua代码,被设定来响应给定的行为。每个处理模块都会收到一个self 变量，它是第一个参数，即为窗体对象本身。 -->
+
+<!-- 每个窗体都可以拥有一个<OnLoad>脚本，并在窗体最初创建时执行。这个脚本通常用于注册事件和其他的初始化行为。 -->
+
+<!-- 为了实际地进行一些操作来响应游戏事件， 必须创建一个<OnEvent>脚本来处理这些响应。
+每个OnEvent脚本都被传入响应事件的窗体对象中。
+简而言之，在<OnEvent>和</OnEvent>之间的任何代码都将放入下面的函数定义中,并被设置为OnEvent脚本
+function OnEvent(self, event ,...)
+	if event == "UNIT_HEALTH" then
+		--Run UNIT HEALTH code here
+	elseif event == "UNIT_MANA" then
+		--Run UNIT MANA code here
+	end
+end 
+例子：事件处理程序function OnEvent     “接收”     CHAT_MSG_WHISPER事件上的13个参数。
+事件处理程序“接收”到的第一个参数始终是被附加了处理程序的框体(在本例中为self)。第二个参数是发生的事件的名称(此处为event)。
+第三个参数经常被称为arg1，或“事件的第一个参数”，因为实际的前两个参数是固定。
+事件最经常用的参数是第一个消息(the message)，
+第二个发送者(the sender)和第六个发送者状态(离开或免扰，“AFK”或“DND”)。
+最后(第13个)参数是此会话中收到的所有聊天消息的计数器。
+-->
