@@ -25,7 +25,8 @@
 
         <Layers>
             <Layer level="OVERLAY">
-                <FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="CENTER" setAllPoints="true" text ="CombatTracker"/>
+                <FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="CENTER" 
+                setAllPoints="true" text ="CombatTracker"/>
             </Layer>
         </Layers>
 
