@@ -1,0 +1,7 @@
+## Interface: 90205
+## Title:TargetTextBuffs
+## Notes: 自制显示buff图标
+## Dependencies:TargetText
+
+TargetTextBuffs.lua
+TargetTextBuffs.xml
