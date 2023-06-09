@@ -1,0 +1,39 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+    <Frame name="TargetTextBuffsFrame" parent="TargetTextFrame">
+        <!-- TargetTextFrame是TargetText插件的窗口的name -->
+        <Size x="1" y="1" />
+        <!-- 若一个窗体的尺寸是0,将无法在Wow中显示。 -->
+        <Anchors>
+            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT">
+                <Offset x="8" y="0">
+                </Anchor>
+            </Anchors>
+
+            <Scripts>
+                <OnLoad>
+                    TargetTextBuffs:OnLoad(self)
+                                                                                <!-- TargetTextBuffs需要在lua中定义 -->
+                </OnLoad>
+                <OnEvent>
+                    TargetTextBuffs:OnEvent(event,...)
+                </OnEvent>
+            </Scripts>
+        </Frame>
+
+        <Frame name="TargetTextBuffsDebuffTemplate" inherits="TargetDebuffFrameTemplate" virtual="true">
+            <!-- TargetDebuffButtonTemplate已经淘汰，新版是TargetDebuffFrameTemplate，在TargetFrame.xml中定义 -->
+            <Size x="21" y="21"/>
+            <Scripts>
+                <OnLoad>
+                    local border = _G[self:GetName().."Border"]
+                    border:SetWidth(23)
+                    border:SetHeight(23)
+                </OnLoad>
+            </Scripts>
+        </Frame>
+
+    </Ui>
+
