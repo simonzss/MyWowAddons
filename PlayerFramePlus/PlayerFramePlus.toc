@@ -1,0 +1,8 @@
+## Interface: 20200
+## Title: PlayerFramePlus
+## Notes: A simple addition to the PlayerFrame
+## Author: Kaelten
+## Version: 1.0
+
+PlayerFramePlus.lua
+

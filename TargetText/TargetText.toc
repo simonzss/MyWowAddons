@@ -1,0 +1,6 @@
+## Interface: 90205
+## Title:TargetText
+## Description: 目标文本插件，仅作用于目标！！！
+
+TargetText.lua
+TargetText.xml

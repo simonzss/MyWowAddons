@@ -1,0 +1,148 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+
+
+    <Frame name="TargetTextFrame" enableMouse="false" inherits="BackdropTemplate">
+        <KeyValues>
+            <KeyValue key="backdropInfo" value="BACKDROP_CHARACTER_CREATE_TOOLTIP_32_32" type="global" />
+            <!-- BACKDROP_CHARACTER_CREATE_TOOLTIP_32_32 = {
+	                bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+	                edgeFile = "Interface\\Glues\\Common\\TextPanel-Border",
+	                tile = true,
+	                tileEdge = true,
+	                tileSize = 32,
+	                edgeSize = 32,
+	                insets = { left = 8, right = 4, top = 4, bottom = 8 }, 
+                    };
+                -->
+        </KeyValues>
+
+        <Layers>
+            <Layer level="ARTWORK">
+
+                <FontString name="$parentName" inherits="GameFontHighlight" justifyH="LEFT">
+                    <Size x= "150" y="14"/>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <!-- 左上角是目标名称 -->
+                            <Offset x="lO" y= "-9"/>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+
+                <FontString name="$parentLevel" inherits="GameFontHighlight">
+                    <Anchors>
+                        <Anchor point="TOPRIGHT">
+                            <!-- 右上角是目标等级 -->
+                            <Offset x="-10" y="-9"/>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+
+                <FontString name="$parentClass" inherits="GameFontHighlight">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo= "$parentName" relativePoint="BOTTOMLEFT">
+                            <!-- 目标名称下是目标职业 -->
+                            <Offset x="0" y="-2"/>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+
+                <FontString name="$parentPvP" inherits="GameFontHighlight" text="PvP">
+                    <Anchors>
+                        <Anchor point="TOPRIGHT" relativeTo= "$parentLevel" relativePoint="BOTTOMRIGHT">
+                            <!-- 目标等级下是目标PvP标志 -->
+                            <Offset x="0" y="-2"/>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+
+                <!-- Faction 阵营 Reaction 目标反应 -->
+                <FontString name="$parentReaction" inherits="GameFontHighlight">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo= "$parentClass" relativePoint="BOTTOMLEFT">
+                            <!-- 目标职业下是目标反应 -->
+                            <Offset x="0" y="-2"/>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+
+                <FontString name="$parentFaction" inherits="GameFontHighlight">
+                    <Anchors>
+                        <Anchor point="TOPRIGHT" relativeTo= "$parentPvP" relativePoint="BOTTOMRIGHT">
+                            <!-- 目标PvP状态下是目标阵营 -->
+                            <Offset x="0" y="-2"/>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+
+                <FontString name="$parentHealthLabel" inherits="GameFontHighlight" text="HEALTH">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo= "$parentReaction" relativePoint="BOTTOMLEFT">
+                            <!-- 目标目标反应下是目标生命值标签 -->
+                            <Offset x="0" y="-2"/>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+
+                <FontString name="$parentHealth" inherits="GameFontNormalSmall">
+                    <Anchors>
+                        <Anchor point="LEFT" relativeTo= "$parentHealthLabel" relativePoint="RIGHT">
+                            <!-- 目标生命值标签右边是目标生命值 -->
+                            <Offset x="10" y="0"/>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+
+                <FontString name="$parentManaLabel" inherits="GameFontNormalSmall">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo= "$parentHealthLabel" relativePoint="BOTTOMLEFT">
+                            <!-- 目标生命值标签下边是目标法力值标签 -->
+                            <Offset x="0" y="-2"/>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+
+                <FontString name="$parentMana" inherits="GameFontNormalSmall">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo= "$parentHealth" relativePoint="BOTTOMLEFT">
+                            <!-- 目标生命值下边是目标法力值 -->
+                            <Offset x="0" y="-2"/>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+
+                <!-- 
+                目标名称		目标等级
+                目标职业		目标PVP标志
+                目标反应	目标阵营
+                目标生命值标签	目标生命值
+                目标法力值标签	目标法力值
+                 -->
+
+            </Layer>
+        </Layers>
+
+        <Scripts>
+            <OnLoad>
+                TargetText:OnLoad()
+            </OnLoad>
+            <OnEvent>
+                TargetText:OnEvent(event,...)
+            </OnEvent>
+            <OnShow>
+                TargetText:RegisterUpdates()
+            </OnShow>
+            <OnHide>
+                TargetText:UnregisterUpdates()
+            </OnHide>
+        </Scripts>
+
+    </Frame>
+
+    <!-- We will be adding more elements here -->
+
+
+</Ui>
